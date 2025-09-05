@@ -1,0 +1,27 @@
+@using BlazorPlayGround.Interfaces
+@inject ICounters CounterService
+
+<div>
+    <button class="btn btn-success" @onclick="OnAddItem">
+        Add item
+    </button>
+</div>
+
+<div>
+    @foreach (var item in CounterService.Counters.Select((_, index) => new { _, index }))
+    {
+        <CounterItem Index="@item.index" />
+    }
+</div>
+
+
+@code {
+    
+    private void OnAddItem()
+    {
+        CounterService.Counters.Add(0);
+        StateHasChanged();
+    }
+    
+    
+}

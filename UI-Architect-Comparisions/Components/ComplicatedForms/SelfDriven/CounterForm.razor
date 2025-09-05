@@ -1,0 +1,30 @@
+<div>
+    <button class="btn btn-success" @onclick="OnAddItem">
+        Add item
+    </button>
+</div>
+<div>
+    @foreach (var item in Counters)
+    {
+        <CounterItem Value="@item" OnValueEdited="OnValueChanged"/>
+    }
+</div>
+
+@code {
+    [Parameter] public List<CounterItem.Item> Counters { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<List<CounterItem.Item>> CountersChanged { get; set; }
+
+    private void OnAddItem()
+    {
+        Counters.Add(new(Counters.Count ,0));
+    }
+
+    private void OnValueChanged(CounterItem.Item arg)
+    {
+        Counters[arg.Index] = arg;
+        CountersChanged.InvokeAsync(Counters);
+    }
+
+}

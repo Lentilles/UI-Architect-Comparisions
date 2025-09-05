@@ -1,0 +1,27 @@
+@using BlazorPlayGround.Interfaces
+@inject ICounters CountersService
+
+<CounterForm />
+
+@if (Submited)
+{
+    @foreach (int item in CountersService.Counters)
+    {
+        <div>@item</div>
+    }
+}
+
+<button class="btn btn-primary" @onclick="@OnSubmit">
+    Submit
+</button>
+
+
+@code
+{
+    private bool Submited { get; set; }
+    
+    private void OnSubmit()
+    {
+        Submited = true;
+    }
+}

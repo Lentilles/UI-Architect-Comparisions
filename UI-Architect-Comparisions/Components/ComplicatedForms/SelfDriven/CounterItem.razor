@@ -1,0 +1,46 @@
+<div class="d-inline-flex">
+    <div>@Value.Index</div>
+    <div>
+        <input type="number" value="@Value.Value" @onchange="OnValueChanged" />
+    </div>
+    <div>
+        <button class="btn btn-danger" @onclick="OnDeleteItem">
+            delete
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Item Value { get; set; }
+    [Parameter] public EventCallback<Item> OnValueEdited { get; set; }
+    [Parameter] public EventCallback<int> ItemDeleted { get; set; }
+
+    private async Task OnDeleteItem()
+    {
+        await ItemDeleted.InvokeAsync(Value.Index);
+    }
+
+    
+    public class Item
+    {
+        public Item(int index, int value)
+        {
+            Index = index;
+            Value = value;
+        }
+
+        public int Index { get; set; }
+        public int Value { get; set; }
+    }
+
+    private async Task OnValueChanged(ChangeEventArgs arg)
+    {
+        
+        if (int.TryParse(arg.Value?.ToString(), out var value))
+        {
+            Value.Value = value;
+            await OnValueEdited.InvokeAsync(Value);
+        }
+    }
+
+}

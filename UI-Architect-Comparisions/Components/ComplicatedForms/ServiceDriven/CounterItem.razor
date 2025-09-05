@@ -1,0 +1,27 @@
+@using BlazorPlayGround.Interfaces
+@inject ICounters CounterService
+
+<div class="d-inline-flex">
+    <div>@Index</div>
+    <div>
+        <input type="number" @bind="CounterService.Counters[Index]" />
+    </div>
+    <div>
+        <button class="btn btn-danger" @onclick="OnDeleteItem">
+            delete
+        </button>
+    </div>
+</div>
+
+
+
+
+@code{
+    [Parameter] public int Index { get; set; }
+
+    private void OnDeleteItem()
+    {
+        CounterService.Counters.RemoveAt(Index);
+    }
+
+}

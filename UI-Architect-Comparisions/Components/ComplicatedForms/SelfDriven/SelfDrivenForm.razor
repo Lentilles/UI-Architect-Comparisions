@@ -1,0 +1,30 @@
+<CounterForm Counters="Counters"/>
+
+@if (Submited)
+{
+    <div class="d-flex flex-column">
+    @foreach (CounterItem.Item item in Counters)
+    {
+        <div class="d-inline-flex">
+            <div>@item.Index</div>
+            <div>@item.Value</div>
+        </div>
+    }
+    </div>
+}
+
+<button class="btn btn-primary" @onclick="@OnSubmit">
+    Submit
+</button>
+
+@code
+{
+    public List<CounterItem.Item> Counters { get; set; } = [];
+    
+    private bool Submited { get; set; }
+    
+    private void OnSubmit()
+    {
+        Submited = true;
+    }
+}
